@@ -155,6 +155,10 @@ function Get-IniCredentials {
                 username = $session.username
                 hostname = $session.hostname
                 passwd = $session.password
+                tunneled = $false
+            }
+            if ("Tunnel" -in $session.keys) {
+                $creds["$($session.username)@$($session.hostname)"].tunneled = 1 -eq $session.Tunnel
             }
         }
         if ("TunnelPassword" -in $session.keys) {
@@ -162,6 +166,7 @@ function Get-IniCredentials {
                 username = $session.TunnelUsername
                 hostname = $session.TunnelHostname
                 passwd = $session.TunnelPassword
+                tunneled = $false
             }
         }
     }
