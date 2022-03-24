@@ -177,10 +177,12 @@ function Get-IniCredentials {
 $creds = Get-IniCredentials  -iniPath $iniPath
 foreach ($key in $creds.keys) {
     $cred = $creds[$key]
-    $passwd = decode @cred
+
+    $passwd = decode -hostname $cred.hostname -username $cred.username -passwd $cred.passwd
     $res = @{
         target = $key
         password = $passwd -join ""
+        tunneled = $cred.Tunneled
     }
     Write-Output ([PSCustomObject] $res)
 } 
